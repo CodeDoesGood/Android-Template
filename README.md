@@ -10,7 +10,29 @@ if you are interested in how to format your code. What is listed below however a
 devs to do the same. We find large style guides difficult to follow and mostly unnecessary and so we have only included what 
 we consider the most important for a readable codebase with consistent formatting.
  
-[Documentation](#documentation) 
+[Java](#java)
+
+[Documentation](#documentation)
+
+[Logging guidelines](#logging-guidelines)
+
+[File Naming](#file-naming) 
+
+[Field definition and naming](#field-definition-and-naming)
+
+[Treat acronyms as words](#treat-acronyms-as-words)
+
+[Avoid justifying variable declarations](#avoid-justifying-variable-declarations)
+
+[Line-wrapping strategies](#line-wrapping-strategies)
+
+[XML style rules](#xml-style-rules)
+
+[Tests style rules](#tests-style-rules)
+
+[Gradle Style](#gradle-style)
+
+[Miscellaneous - Project Specific Recommendations](#miscellaneous---project-specific-recommendations)
 
 ## Lead Mentors
 (please delete this section when you copy the style guide into your project)  
@@ -21,15 +43,15 @@ Some guidelines are required, some are preferred, and some are optional. Guideli
 
 \* With optional and preferred guidelines there is actually one requirement. The requirement is that you _must_ list a guideline for that item. No guidelines may be removed, but they can be edited. Note: You are more than welcome to add additional guidelines if there are things that are important to you which we have not included.
 
+## Java
+We are a Java-first dev group. This means: Use Google's coding standards for source code in the Java™ Programming Language. [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
+
 ## Documentation
 Android projects should be self-documenting but sometimes documentation is required.
 
 - The code is a work-around for a bug (please include the URL of where you found the work around if you found it online)
 - A large chunk of code has been copied from another project or article (please include the URL and other identifying information of where the work comes from as well as the License if it comes from a hosted repository / not an article or Stack Overflow post)
 - You are doing anything that may seem out of the ordinary / not a native or standard approach
-
-### Java
-We are a Java-first dev group. This means: Use Google's coding standards for source code in the Java™ Programming Language. [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 
 ### Organization
 - Commented out code must include a // TODO: statement explaining why it is commented out
@@ -273,7 +295,7 @@ Any acronyms for class names, variable names etc should be treated as words - th
 | parseHtml       | parseHTML       |
 | generateXmlFile | generateXMLFile |
  
-##  Avoid justifying variable declarations
+## Avoid justifying variable declarations
 
 Any declaration of variables should not use any special form of alignment, for example:
 
@@ -445,8 +467,8 @@ When using the Espresso API, methods should be chained on new lines to make the 
 
 Chaining calls in this style not only helps us stick to less than 100 characters per line but it also makes it easy to read the chain of events taking place in espresso tests.
 
-# Gradle Style
-## Dependencies
+## Gradle Style
+### Dependencies
 
 ### Versioning
 
@@ -514,18 +536,18 @@ Where dependencies are only used individually for application or test purposes, 
 
     testCompile 'org.robolectric:robolectric:3.0'
 
-# Miscellaneous - Project-Specific Recommendations
-## Compress image resources
+## Miscellaneous - Project Specific Recommendations
+### Compress image resources
 When needed to use png or jpg images always try to compress the files before copy into project. You could use this website for this purpose [TinyPNG](https://tinypng.com/).
 
-## Avoid using ENUMS
+### Avoid using ENUMS
 Always try to use TypeDef instead of ENUMS in order to increase the app performace. Good article to read about it: [Android Performance: Avoid using ENUM on Android](https://android.jlelse.eu/android-performance-avoid-using-enum-on-android-326be0794dc3)
 
-## Be carefull with Memory Leak
+### Be carefull with Memory Leak
 We need to avoid memory leaks while developing Android Apps, here a good article about it [Eight Ways Your Android App Can Leak Memory](http://blog.nimbledroid.com/2016/05/23/memory-leaks.html).Be aware while using `Asynctask` [The Hidden Pitfalls of AsyncTask](http://blog.danlew.net/2014/06/21/the-hidden-pitfalls-of-asynctask/).
 
-## Do not block the UI Thread
-We need to avoid blocking the UI Thread while running heavy work. So before to perform any heavy task like `Network`, `Long Computation` or `Database Operations` we need to use background jobs [Best Practices for Background Jobs](https://developer.android.com/training/best-background.html).
+### Do not block the UI Thread
+We need to avoid blocking the UI Thread while running heavy work. So before to perform any heavy task like `Networking Jobs`, `Long Computations` or `Database Operations` we need to use background jobs [Best Practices for Background Jobs](https://developer.android.com/training/best-background.html).
 
 ##### Credits:  
 - [Ribot: android-guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
