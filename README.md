@@ -395,10 +395,127 @@ Note: This formatting can be carried out by using the format feature in android 
 Doing this makes it easy to navigate through XML attributes when it comes to making changes to layout files.
 
 ## Tests style rules
+### Unit tests
+
+Any Unit Test classes should be written to match the name of the class that the test are targeting, followed by the Test suffix. For example:
+
+| Class                | Test Class               |
+|----------------------|--------------------------|
+| DataManager          | DataManagerTest          |
+| UserProfilePresenter | UserProfilePresenterTest |
+| PreferencesHelper    | PreferencesHelperTest    |
+
+All Test methods should be annotated with the `@Test` annotation, the methods should be named using the following template:
 
 
+    @Test
+    public void methodNamePreconditionExpectedResult() { }
 
+So for example, if we want to check that the signUp() method with an invalid email address fails, the test would look like:
+
+
+    @Test
+    public void signUpWithInvalidEmailFails() { }
+
+Tests should focus on testing only what the method name entitles, if there’s extra conditions being tested in your Test method then this should be moved to it’s own individual test.
+
+If a class we are testing contains many different methods, then the tests should be split across multiple test classes - this helps to keep the tests more maintainable and easier to locate. For example, a DatabaseHelper class may need to be split into multiple test classes such as :
+
+
+    DatabaseHelperUserTest
+    DatabaseHelperPostsTest
+    DatabaseHelperDraftsTest
+
+### Espresso tests
+
+Each Espresso test class generally targets an Activity, so the name given to it should match that of the targeted Activity, again followed by Test. For example:
+
+| Class                | Test Class               |
+|----------------------|--------------------------|
+| MainActivity         | MainActivityTest         |
+| ProfileActivity      | ProfileActivityTest      |
+| DraftsActivity       | DraftsActivityTest       |
+
+When using the Espresso API, methods should be chained on new lines to make the statements more readable, for example:
+
+
+    onView(withId(R.id.text_title))
+            .perform(scrollTo())
+            .check(matches(isDisplayed()))
+
+Chaining calls in this style not only helps us stick to less than 100 characters per line but it also makes it easy to read the chain of events taking place in espresso tests.
+
+# Gradle Style
+## Dependencies
+
+### Versioning
+
+Where applicable, versioning that is shared across multiple dependencies should be defined as a variable within the project's build.gradle scope. For example:
+
+    Project's build.gradle:
+    
+    ext {
+	    // default dependencies versions
+	    support = '25.3.1'
+	    okHttp = '3.6.0'
+	    dagger = '2.10'
+	    retrofit = '2.2.0'
+    }
+    
+    App's buld.gradle:
+    
+    final versions = rootProject.ext
+
+    dependencies {
+
+	    //App Dependencies
+	    compile "com.android.support:appcompat-v7:$versions.support"
+	    compile "com.android.support:recyclerview-v7:$versions.support"
+	    compile "com.android.support:cardview-v7:$versions.support"
+	    compile "com.android.support:support-annotations:$versions.support"
+	    compile "com.android.support:design:$versions.support"
+	    .....
+    }
+
+This makes it easy to update dependencies in the future as we only need to change the version number once for multiple dependencies.
+
+### Grouping
+
+Where applicable, dependencies should be grouped by package name, with spaces in-between the groups. For example:
+
+
+    compile "com.android.support:percent:$versions.support"
+    compile "com.android.support:customtabs:$versions.support"
+
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxjava:1.1.5'
+
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton.timber:timber:4.1.2'
+
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+
+`compile` , `testCompile` and `androidTestCompile`  dependencies should also be grouped into their corresponding section. For example:
+
+    // App Dependencies
+    compile "com.android.support:support-v4:$versions.support"
+    compile "com.android.support:recyclerview-v7:$versions.support"
+
+    // Instrumentation test dependencies
+    androidTestCompile "com.android.support:support-annotations:$versions.support"
+
+    // Unit tests dependencies
+    testCompile 'org.robolectric:robolectric:3.0'
+
+###  Independent Dependencies
+
+Where dependencies are only used individually for application or test purposes, be sure to only compile them using `compile` , `testCompile` or `androidTestCompile` . For example, where the robolectric dependency is only required for unit tests, it should be added using:
+
+    testCompile 'org.robolectric:robolectric:3.0'
+
+# Miscellaneous Project Specific
 
 ##### Credits: 
-[ribot-android-guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
-[Commit451-android-project-guidelines](https://github.com/Commit451/guidelines/blob/master/android.md)
+- [ribot: android-guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
+- [Commit451: android-project-guidelines](https://github.com/Commit451/guidelines/blob/master/android.md)
