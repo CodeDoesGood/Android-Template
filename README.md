@@ -514,8 +514,19 @@ Where dependencies are only used individually for application or test purposes, 
 
     testCompile 'org.robolectric:robolectric:3.0'
 
-# Miscellaneous Project Specific
+# Miscellaneous - Project-Specific Recommendations
+## Compress image resources
+When needed to use png or jpg images always try to compress the files before copy into project. You could use this website for this purpose [TinyPNG](https://tinypng.com/).
 
-##### Credits: 
-- [ribot: android-guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
+## Avoid using ENUMS
+Always try to use TypeDef instead of ENUMS in order to increase the app performace. Good article to read about it: [Android Performance: Avoid using ENUM on Android](https://android.jlelse.eu/android-performance-avoid-using-enum-on-android-326be0794dc3)
+
+## Be carefull with Memory Leak
+We need to avoid memory leaks while developing Android Apps, here a good article about it [Eight Ways Your Android App Can Leak Memory](http://blog.nimbledroid.com/2016/05/23/memory-leaks.html).Be aware while using `Asynctask` [The Hidden Pitfalls of AsyncTask](http://blog.danlew.net/2014/06/21/the-hidden-pitfalls-of-asynctask/).
+
+## Do not block the UI Thread
+We need to avoid blocking the UI Thread while running heavy work. So before to perform any heavy task like `Network`, `Long Computation` or `Database Operations` we need to use background jobs [Best Practices for Background Jobs](https://developer.android.com/training/best-background.html).
+
+##### Credits:  
+- [Ribot: android-guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
 - [Commit451: android-project-guidelines](https://github.com/Commit451/guidelines/blob/master/android.md)
