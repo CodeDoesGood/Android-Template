@@ -37,11 +37,11 @@ We are a Java-first dev group. This means: Use Google's coding standards for sou
 
 1. Constants
 2. Fields
-3. Inner classes or interfaces
-4. Constructors
-5. Override methods and callbacks (public or private)
-6. Public methods
-7. Private methods
+3. Constructors
+4. Override methods and callbacks (public or private)
+5. Public methods
+6. Private methods
+7. Inner classes or interfaces
 
 Example:
 
@@ -53,13 +53,8 @@ public class MainActivity extends Activity {
     private String title;
     private TextView textViewTitle;
 
-    static class AnInnerClass {
-       ...
-    }
-
     @Override
     public void onCreate() {
-        ...
     }
 
     public void setTitle(String title) {
@@ -67,7 +62,13 @@ public class MainActivity extends Activity {
     }
     
     private void setUpView() {
-        ...
+    }
+    
+    static class AnInnerClass {
+       ...
+    }
+    
+    interface SomeInterface {
     }
 }
 ```
@@ -290,3 +291,114 @@ Avoid doing this:
 
 This creates a stream of whitespace which is known to make text difficult to read for certain learning difficulties.
 
+## Line-wrapping strategies
+There isn't an exact formula that explains how to line-wrap and quite often different solutions are valid. However there are a few rules that can be applied to common cases.
+
+__Break at operators__
+
+When the line is broken at an operator, the break comes __before__ the operator. For example:
+
+```java
+int longName = anotherVeryLongVariable + anEvenLongerOne - thisRidiculousLongOne
+        + theFinalOne;
+```
+
+__Assignment Operator Exception__
+
+An exception to the `break at operators` rule is the assignment operator `=`, where the line break should happen __after__ the operator.
+
+```java
+int longName =
+        anotherVeryLongVariable + anEvenLongerOne - thisRidiculousLongOne + theFinalOne;
+```
+
+__Method chain case__
+
+When multiple methods are chained in the same line - for example when using Builders - every call to a method should go in its own line, breaking the line before the `.`
+
+```java
+Picasso.with(context).load("http://ribot.co.uk/images/sexyjoe.jpg").into(imageView);
+```
+
+```java
+Picasso.with(context)
+        .load("http://ribot.co.uk/images/sexyjoe.jpg")
+        .into(imageView);
+```
+
+__Long parameters case__
+
+When a method has many parameters or its parameters are very long, we should break the line after every comma `,`
+
+```java
+loadPicture(context, "http://ribot.co.uk/images/sexyjoe.jpg", mImageViewProfilePicture, clickListener, "Title of the picture");
+```
+
+```java
+loadPicture(context,
+        "http://ribot.co.uk/images/sexyjoe.jpg",
+        mImageViewProfilePicture,
+        clickListener,
+        "Title of the picture");
+```
+
+## XML style rules
+#### Use self closing tags
+
+When an XML element doesn't have any contents, you __must__ use self closing tags.
+
+This is good:
+
+```xml
+<TextView
+	android:id="@+id/text_view_profile"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
+```
+
+This is __bad__ :
+
+```xml
+<!-- Don\'t do this! -->
+<TextView
+    android:id="@+id/text_view_profile"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+</TextView>
+```
+#### Attributes ordering
+Ordering attributes not only looks tidy but it helps to make it quicker when looking for attributes within layout files. As a general rule,
+
+1. View Id
+2. Style
+3. Layout width and layout height
+4. Other `layout_` attributes, sorted alphabetically
+5. Remaining attributes, sorted alphabetically
+
+For example:
+
+    <Button
+        android:id="@id/button_accept"
+        style="@style/ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:padding="16dp"
+        android:text="@string/button_skip_sign_in"
+        android:textColor="@color/bluish_gray" />
+
+Note: This formatting can be carried out by using the format feature in android studio -
+
+`cmd + shift + L`
+
+Doing this makes it easy to navigate through XML attributes when it comes to making changes to layout files.
+
+## Tests style rules
+
+
+
+
+##### Credits: 
+[ribot-android-guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
+[Commit451-android-project-guidelines](https://github.com/Commit451/guidelines/blob/master/android.md)
