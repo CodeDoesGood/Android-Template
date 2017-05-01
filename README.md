@@ -28,9 +28,88 @@ Android projects should be self-documenting but sometimes documentation is requi
 - A large chunk of code has been copied from another project or article (please include the URL and other identifying information of where the work comes from as well as the License if it comes from a hosted repository / not an article or Stack Overflow post)
 - You are doing anything that may seem out of the ordinary / not a native or standard approach
 
+### Java
+We are a Java-first dev group. This means: Use Google's coding standards for source code in the Java™ Programming Language. [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
+
 ### Organization
-- Use Google's coding standards for source code in the Java™ Programming Language. [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 - Commented out code must include a // TODO: statement explaining why it is commented out
+- There is no single correct solution for this but using a logical and consistent order will improve code learnability and readability. It is recommendable to use the following order:
+
+1. Constants
+2. Fields
+3. Inner classes or interfaces
+4. Constructors
+5. Override methods and callbacks (public or private)
+6. Public methods
+7. Private methods
+
+Example:
+
+```java
+public class MainActivity extends Activity {
+
+    public static final String CONSTANT = "CONSTANT"
+    
+    private String title;
+    private TextView textViewTitle;
+
+    static class AnInnerClass {
+       ...
+    }
+
+    @Override
+    public void onCreate() {
+        ...
+    }
+
+    public void setTitle(String title) {
+      this.title = title;
+    }
+    
+    private void setUpView() {
+        ...
+    }
+}
+```
+
+If your class is extending an __Android component__ such as an Activity or a Fragment, it is a good practice to order the override methods so that they __match the component's lifecycle__. For example, if you have an Activity that implements `onCreate()`, `onDestroy()`, `onPause()`, `onStop()` and `onResume()`, then the correct order is:
+
+```java
+public class MainActivity extends Activity {
+
+	//Order matches Activity lifecycle
+    @Override
+    public void onCreate() {}
+
+    @Override
+    public void onResume() {}
+
+    @Override
+    public void onPause() {}
+    
+    @Override
+    public void onStop() {}
+
+    @Override
+    public void onDestroy() {}
+
+}
+```
+#### Parameter ordering in methods
+
+When programming for Android, it is quite common to define methods that take a `Context`. If you are writing a method like this, then the __Context__ must be the __first__ parameter.
+
+The opposite case are __callback__ interfaces that should always be the __last__ parameter.
+
+Examples:
+
+```java
+// Context always goes first
+public User loadUser(Context context, int userId);
+
+// Callbacks always go last
+public void loadUserAsync(Context context, int userId, UserCallback callback);
+```
 
 In general, though, if you need to write documentation to explain what a function does, that code is not written well. 
 Do not optimize unnecessarily or prematurely, but rewrite your code to be as clear and obviously self-evident as you can. 
@@ -43,4 +122,171 @@ If we find code commented without a TODO statement we will be contacting the dev
 #### Project-Specific Recommendations
 
 \* If you are working on an API that will be consumed by other projects or turned into a framework/library, additional documentation will be required. Your Lead Mentor will adjust this style guide in that scenario with more information specific to your project. Lead Mentors please delete this line when creating your project style guide.
+
+
+## Logging guidelines
+
+Use the logging methods provided by the `Log` class to print out error messages or other information that may be useful for developers to identify issues:
+
+* `Log.v(String tag, String msg)` (verbose)
+* `Log.d(String tag, String msg)` (debug)
+* `Log.i(String tag, String msg)` (information)
+* `Log.w(String tag, String msg)` (warning)
+* `Log.e(String tag, String msg)` (error)
+
+As a general rule, we use the class name as tag and we define it as a `static final` field at the top of the file. For example:
+
+```java
+public class MyClass {
+    private static final String TAG = MyClass.class.getSimpleName();
+
+    public myMethod() {
+        Log.e(TAG, "My error message");
+    }
+}
+```
+
+VERBOSE and DEBUG logs __must__ be disabled on release builds. It is also recommended to disable INFORMATION, WARNING and ERROR logs but you may want to keep them enabled if you think they may be useful to identify issues on release builds. If you decide to leave them enabled, you have to make sure that they are not leaking private information such as email addresses, user ids, etc.
+
+To only show logs on debug builds:
+
+```java
+if (BuildConfig.DEBUG) Log.d(TAG, "The value of x is " + x);
+```
+
+#### Project-Specific Recommendations
+- Lead Mentors: If you prefer your Logging could be also handled by the library [Timber](https://github.com/JakeWharton/timber).
+
+
+## File Naming
+#### Class Files
+
+Any classes that you define should be named using UpperCamelCase, for example:
+
+	AndroidActivity, NetworkHelper, UserFragment, PerActivity
+
+Any classes extending an Android framework component should **always** end with the component name. For example:
+
+	UserFragment, SignUpActivity, RateAppDialog, PushNotificationServer, NumberView
  
+#### Resource Files
+
+When naming resource files you should be sure to name them using lowercase letters and underscores instead of spaces, for example:
+
+	activity_main, fragment_user, item_post
+ 
+#### Drawable Files
+
+Drawable resource files should be named using the **ic_** prefix along with the size and color of the asset. For example, white accept icon sized at 24dp would be named:
+
+	ic_accept_white_24dp
+
+And a black cancel icon sized at 48dp would be named:
+
+	ic_cancel_black_48dp
+ 
+Other drawable files should be named using the corresponding prefix, for example:
+
+| Type       | Prefix    | Example                |
+|------------|-----------|------------------------|
+| Selector   | selector_ | selector_button_cancel |
+| Background | bg_       | bg_rounded_button      |
+| Circle     | circle_   | circle_white           |
+| Progress   | progress_ | progress_circle_purple |
+| Divider    | divider_  | divider_grey           |
+
+When creating selector state resources, they should be named using the corresponding suffix:
+
+| State    | Suffix    | Example             |
+|----------|-----------|---------------------|
+| Normal   | _normal   | btn_accept_normal   |
+| Pressed  | _pressed  | btn_accept_pressed  |
+| Focused  | _focused  | btn_accept_focused  |
+| Disabled | _disabled | btn_accept_disabled |
+| Selected | _selected | btn_accept_selected |
+
+#### Layout Files
+
+When naming layout files, they should be named starting with the name of the Android Component that they have been created for. For example:
+
+| Component        | Class Name      | Layout Name       |
+|------------------|-----------------|-------------------|
+| Activity         | MainActivity    | activity_main     |
+| Fragment         | MainFragment    | fragment_main     |
+| Dialog           | RateDialog      | dialog_rate       |
+| Widget           | UserProfileView | view_user_profile |
+| AdapterView Item | N/A             | item_follower     |
+
+
+## Field definition and naming
+
+All fields should be declared at the top of the file, following these rules:
+
+- Private, non-static field names should not start with m. This is right:
+
+    userSignedIn, userNameText, acceptButton
+
+Not this:
+
+    mUserSignedIn, mUserNameText, mAcceptButton
+
+
+- Private, static field names do not need to start with an s. This is right:
+
+    someStaticField, userNameText
+
+Not this:
+
+	sSomeStaticField, sUserNameText
+
+
+- All other fields also start with a lower case letter.
+
+
+    int numOfChildren;
+    String username;
+
+
+- Static final fields (known as constants) are ALL_CAPS_WITH_UNDERSCORES.
+
+
+    private static final int PAGE_COUNT = 0;
+
+Field names that do not reveal intention should not be used. For example,
+
+    int e; //number of elements in the list
+
+why not just give the field a meaningful name in the first place, rather than leaving a comment!
+
+    int numberOfElements;
+    
+## Treat acronyms as words
+
+Any acronyms for class names, variable names etc should be treated as words - this applies for any capitalisation used for any of the letters. For example:
+
+| Do              | Don't           |
+|-----------------|-----------------|
+| setUserId       | setUserID       |
+| String uri      | String URI      |
+| int id          | int ID          |
+| parseHtml       | parseHTML       |
+| generateXmlFile | generateXMLFile |
+ 
+##  Avoid justifying variable declarations
+
+Any declaration of variables should not use any special form of alignment, for example:
+
+This is fine:
+
+    private int userId = 8;
+    private int count = 0;
+    private String username = "hitherejoe";
+
+Avoid doing this:
+
+    private String username = "hitherejoe";
+    private int userId      = 8;
+    private int count       = 0;
+
+This creates a stream of whitespace which is known to make text difficult to read for certain learning difficulties.
+
