@@ -549,6 +549,16 @@ We need to avoid memory leaks while developing Android Apps, here a good article
 ### Do not block the UI Thread
 We need to avoid blocking the UI Thread while running heavy work. So before to perform any heavy task like `Networking Jobs`, `Long Computations` or `Database Operations` we need to use background jobs [Best Practices for Background Jobs](https://developer.android.com/training/best-background.html).
 
+### Avoid using Magic Numbers
+A magic number is a direct usage of a number in the code. Avoiding usage of magic numbers improves readability of the code and makes code easier to maintain. Imagine setting the size of the password field in the GUI. If a magic number is used, whenever the max size changes, the code would have to be changed in two different locations. If one is forgetten, this will lead to inconsistencies.
+
+### Avoid using hard-coded xml values
+Use values in resource files instead. Along the same vein as avoiding magic numbers, as well as a couple other benefits. Lessens memory footprint by creating one reference point for potentially numerous places where a value may be used. Uses memory only when needed.
+
+### Favor verbosity over brevity
+Give descriptive names for variables to avoid having to tack on additional comments explaining the code. This leads to self-documenting code that is easier to parse through and understand.
+
 ##### Credits:  
 - [Ribot: android-guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
 - [Commit451: android-project-guidelines](https://github.com/Commit451/guidelines/blob/master/android.md)
+- [Marcio Aguiar: Stack Overflow] (http://stackoverflow.com/questions/47882/what-is-a-magic-number-and-why-is-it-bad)
