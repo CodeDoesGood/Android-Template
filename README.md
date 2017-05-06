@@ -590,4 +590,4 @@ Give descriptive names for variables to avoid having to tack on additional comme
 ##### Credits:  
 - [Ribot: android-guidelines](https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md)
 - [Commit451: android-project-guidelines](https://github.com/Commit451/guidelines/blob/master/android.md)
-- [Marcio Aguiar: Stack Overflow](http://stackoverflow.com/questions/47882/what-is-a-magic-number-and-why-is-it-bad)
+- [Marcio Aguiar: Stack Overflow - What is a Magic number and why is it bad](http://stackoverflow.com/questions/47882/what-is-a-magic-number-and-why-is-it-bad)
