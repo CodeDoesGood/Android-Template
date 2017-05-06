@@ -54,6 +54,32 @@ Android projects should be self-documenting but sometimes documentation is requi
 - You are doing anything that may seem out of the ordinary / not a native or standard approach
 
 ### Organization
+Source files should be packaged by feature, not by layer or category. Packaging by feature results in better modularity and easier code navigation as related items will be closer together.
+
+Do:
+```java
+org.codedoesgood.myapp.sampledetails.view.SampleDetailsActivity
+org.codedoesgood.myapp.sampledetails.view.SampleDetailsAdapter
+org.codedoesgood.myapp.sampledetails.model.SampleItem
+org.codedoesgood.myapp.sampledetails.viewmodel.SampleDetailsViewModel
+org.codedoesgood.myapp.samplelist.view.SampleListActivity
+org.codedoesgood.myapp.samplelist.view.SampleListAdapter
+org.codedoesgood.myapp.samplelist.model.SampleItemRow
+org.codedoesgood.myapp.samplelist.viewmodel.SampleListViewModel
+```
+
+Don't:
+```java
+org.codedoesgood.myapp.adapters.SampleDetailsAdapter
+org.codedoesgood.myapp.adapters.SampleListAdapter
+org.codedoesgood.myapp.models.SampleItem
+org.codedoesgood.myapp.models.SampleItemRow
+org.codedoesgood.myapp.views.SampleDetailsActivity
+org.codedoesgood.myapp.views.SampleListActivity
+org.codedoesgood.myapp.viewmodels.SampleDetailsViewModel
+org.codedoesgood.myapp.viewmodels.SampleListViewModel
+```
+
 - Commented out code must include a // TODO: statement explaining why it is commented out
 - There is no single correct solution for this but using a logical and consistent order will improve code learnability and readability. It is recommendable to use the following order:
 
@@ -95,7 +121,7 @@ public class MainActivity extends Activity {
 }
 ```
 
-If your class is extending an __Android component__ such as an Activity or a Fragment, it is a good practice to order the override methods so that they __match the component's lifecycle__. For example, if you have an Activity that implements `onCreate()`, `onDestroy()`, `onPause()`, `onStop()` and `onResume()`, then the correct order is:
+If your class is extending an __Android component__ such as an Activity or a Fragment, it is a good practice to order the override methods so that they __match the component's lifecycle__. For example, if you have an Activity that implements `onCreate()`, `onDestroy()`, `onPause()`, `onStart()`, `onStop()` and `onResume()`, then the correct order is:
 
 ```java
 public class MainActivity extends Activity {
@@ -103,6 +129,9 @@ public class MainActivity extends Activity {
 	//Order matches Activity lifecycle
     @Override
     public void onCreate() {}
+    
+    @Override
+    public void onStart() {}
 
     @Override
     public void onResume() {}
