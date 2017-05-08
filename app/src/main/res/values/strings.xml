@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CodeDoesGood-AndroidTemplate</string>
+
+
+    <!-- API Keys-->
+    <!-- This key will need to be changed when we receive the correct key to use-->
+    <string name="crashlytics_api_key">6ffe8e03ed4a528f6b985f94dd971d3524cf27af</string>
 </resources>
