@@ -30,3 +30,8 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.5.1'
     testCompile 'junit:junit:4.12'
 }
+
+afterEvaluate {
+    assembleDebug.dependsOn 'checkstyle'
+    compileDebugSources.dependsOn 'checkstyle'
+}
