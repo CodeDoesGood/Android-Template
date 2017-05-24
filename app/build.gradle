@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: '../config/quality.gradle'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 25
@@ -11,6 +12,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [crashlyticsApiKey: project.hasProperty('crashlytics_api_key') ? crashlytics_api_key : System.getenv('crashlytics_api_key') ]
+
     }
     buildTypes {
         release {
@@ -27,8 +30,15 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') { transitive = true; }
     compile 'com.jakewharton.timber:timber:4.5.1'
     testCompile 'junit:junit:4.12'
+
+
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 afterEvaluate {

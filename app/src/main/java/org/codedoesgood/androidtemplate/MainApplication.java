@@ -4,7 +4,7 @@ import android.app.Application;
 import timber.log.Timber;
 
 /**
- * Default launch activity for template
+ * Default launch application
  */
 public class MainApplication extends Application {
 
