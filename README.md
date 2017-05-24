@@ -32,6 +32,8 @@ we consider the most important for a readable codebase with consistent formattin
 
 [Gradle Style](#gradle-style)
 
+[Private Keys](#private-keys)
+
 [Miscellaneous - Project Specific Recommendations](#miscellaneous---project-specific-recommendations)
 
 ## Lead Mentors
@@ -496,6 +498,10 @@ When using the Espresso API, methods should be chained on new lines to make the 
 
 Chaining calls in this style not only helps us stick to less than 100 characters per line but it also makes it easy to read the chain of events taking place in espresso tests.
 
+### Robot Pattern 
+
+Libraries like Espresso allow UI tests to have stable interactions with your app, but without discipline, these tests can become hard to manage and require frequent updating. To deal with this issue we strongly recommend to use the robot pattern that allows you to create stable, readable, and maintainable tests. Here is a great talk about the [Robot Pattern](https://news.realm.io/news/kau-jake-wharton-testing-robots/)
+
 ## Gradle Style
 ### Dependencies
 
@@ -564,6 +570,21 @@ Where applicable, dependencies should be grouped by package name, with spaces in
 Where dependencies are only used individually for application or test purposes, be sure to only compile them using `compile` , `testCompile` or `androidTestCompile` . For example, where the robolectric dependency is only required for unit tests, it should be added using:
 
     testCompile 'org.robolectric:robolectric:3.0'
+
+## Private Keys
+As we know, we can not upload our private keys to public repositories.
+In order to manage this issue we will handle this by saving our private keys in two different ways:
+ 1) Save the private keys in the environment variable.
+ 2) Save the private keys in the gradle.properties file (this file is never uploaded to repository, it will be in each developer's machine).
+
+Then we can access the private key in the `build.gradle`:
+
+    defaultConfig {
+      manifestPlaceholders = 
+          [facebookAppId: project.hasProperty("'FACEBOOK_API'") ? FACEBOOK_APP_ID: System.getenv('FACEBOOK_API')]
+    }
+
+As we use the Travis-CI we need to save also our private keys in the environment variable in order to build and test our application. Here is a how-to: https://stackoverflow.com/questions/34247645/how-to-mock-gradles-buildconfigfield-for-travis-ci-build?answertab=votes#tab-top
 
 ## Miscellaneous - Project Specific Recommendations
 ### Compress image resources
