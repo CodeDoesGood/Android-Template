@@ -1,8 +1,6 @@
 package org.codedoesgood.androidtemplate.MainActivityTests.Robots;
 
-
-import android.support.test.espresso.Espresso;
-
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -15,7 +13,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class MainActivityRobot {
 
     public MainActivityRobot verifyTextIsVisible(String textToCheck){
-        Espresso.onView(withText(textToCheck)).check(matches(isDisplayed()));
+        onView(withText(textToCheck)).check(matches(isDisplayed()));
         return this;
     }
 }
