@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Default launch activity for template
+ * Default launch activity
  */
 public class MainActivity extends AppCompatActivity {
 
