@@ -46,7 +46,7 @@ public class DateTimeFormatTest {
 
     @Test
     public void yesterdayFormat(){
-        String expectedValue = getTestCaseExpectedValue(context, R.string.date_format_util_yesterday);
+        String expectedValue = getTestCaseExpectedValue(R.string.date_format_util_yesterday);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         assertTrue(robot.verifyDateFormat(context, cal.getTimeInMillis(), expectedValue));
@@ -54,20 +54,20 @@ public class DateTimeFormatTest {
 
     @Test
     public void todayFormat(){
-        String expectedValue = getTestCaseExpectedValue(context, R.string.date_format_util_today);
+        String expectedValue = getTestCaseExpectedValue(R.string.date_format_util_today);
         Calendar cal = Calendar.getInstance();
         assertTrue(robot.verifyDateFormat(context, cal.getTimeInMillis(), expectedValue));
     }
 
     @Test
     public void tomorrowFormat(){
-        String expectedValue = getTestCaseExpectedValue(context, R.string.date_format_util_tomorrow);
+        String expectedValue = getTestCaseExpectedValue(R.string.date_format_util_tomorrow);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
         assertTrue(robot.verifyDateFormat(context, cal.getTimeInMillis(), expectedValue));
     }
 
-    private String getTestCaseExpectedValue(Context context, int resourceID){
+    private String getTestCaseExpectedValue(int resourceID){
         String expectedValue = context.getString(resourceID);
         String[] valueArray = expectedValue.split(" ");
         return valueArray[0];
