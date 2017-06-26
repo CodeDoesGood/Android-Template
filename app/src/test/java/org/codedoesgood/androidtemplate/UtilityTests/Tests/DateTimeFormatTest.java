@@ -2,48 +2,50 @@ package org.codedoesgood.androidtemplate.UtilityTests.Tests;
 
 import android.content.Context;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import org.codedoesgood.androidtemplate.BuildConfig;
 
-import org.codedoesgood.androidtemplate.MainActivity;
 import org.codedoesgood.androidtemplate.R;
 import org.codedoesgood.androidtemplate.UtilityTests.Robots.DateTimeFormatRobot;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 import java.util.Calendar;
 
 import static junit.framework.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class)
 public class DateTimeFormatTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityRule =
-            new ActivityTestRule<>(MainActivity.class);
+    private Context context;
+    private DateTimeFormatRobot robot;
+
+    @Before
+    public void setup() {
+        context = RuntimeEnvironment.application;
+        robot = new DateTimeFormatRobot();
+    }
 
     @Test
     public void pastDateFormat(){
-        Context context = mActivityRule.getActivity().getApplicationContext();
-        DateTimeFormatRobot robot = new DateTimeFormatRobot();
         String pastYear = "2014";
         assertTrue(robot.verifyDateFormat(context, 1395028800000L, pastYear));
     }
 
     @Test
     public void futureDateFormat(){
-        Context context = mActivityRule.getActivity().getApplicationContext();
-        DateTimeFormatRobot robot = new DateTimeFormatRobot();
         String futureYear = "2029";
         assertTrue(robot.verifyDateFormat(context, 1868414400000L, futureYear));
     }
 
     @Test
     public void yesterdayFormat(){
-        Context context = mActivityRule.getActivity().getApplicationContext();
-        DateTimeFormatRobot robot = new DateTimeFormatRobot();
         String expectedValue = getTestCaseExpectedValue(context, R.string.date_format_util_yesterday);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
@@ -52,8 +54,6 @@ public class DateTimeFormatTest {
 
     @Test
     public void todayFormat(){
-        Context context = mActivityRule.getActivity().getApplicationContext();
-        DateTimeFormatRobot robot = new DateTimeFormatRobot();
         String expectedValue = getTestCaseExpectedValue(context, R.string.date_format_util_today);
         Calendar cal = Calendar.getInstance();
         assertTrue(robot.verifyDateFormat(context, cal.getTimeInMillis(), expectedValue));
@@ -61,8 +61,6 @@ public class DateTimeFormatTest {
 
     @Test
     public void tomorrowFormat(){
-        Context context = mActivityRule.getActivity().getApplicationContext();
-        DateTimeFormatRobot robot = new DateTimeFormatRobot();
         String expectedValue = getTestCaseExpectedValue(context, R.string.date_format_util_tomorrow);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
@@ -70,7 +68,7 @@ public class DateTimeFormatTest {
     }
 
     private String getTestCaseExpectedValue(Context context, int resourceID){
-        String expectedValue = context.getResources().getString(resourceID);
+        String expectedValue = context.getString(resourceID);
         String[] valueArray = expectedValue.split(" ");
         return valueArray[0];
     }

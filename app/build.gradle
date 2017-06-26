@@ -11,7 +11,6 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [crashlyticsApiKey: project.hasProperty('crashlytics_api_key') ? crashlytics_api_key : System.getenv('crashlytics_api_key') ]
 
     }
@@ -25,16 +24,14 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    testCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') { transitive = true; }
     compile 'com.jakewharton.timber:timber:4.5.1'
-    testCompile 'junit:junit:4.12'
-
-
+    testCompile 'org.robolectric:robolectric:3.3.2'
 }
 
 repositories {
