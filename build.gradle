@@ -12,6 +12,33 @@ buildscript {
     }
 }
 
+
+ext {
+
+    projectProperties = [
+            compileSdkVersion: 25,
+            buildToolsVersion: '25.0.3',
+            minSdkVersion    : 19,
+            targetSdkVersion : 25,
+            versionCode      : 1,
+            versionName      : '1.0.0'
+    ]
+
+    libVersions = [
+            timber : '4.5.1',
+            android: [
+                    support         : '25.3.1',
+                    constraintlayout: '1.0.2'
+            ]
+    ]
+
+    testVersions = [
+            junit      : '4.12',
+            robolectric: '3.2.2',
+            espresso   : '2.2.2',
+    ]
+}
+
 allprojects {
     repositories {
         jcenter()
