@@ -1,10 +1,14 @@
 package org.codedoesgood.androidtemplate;
 
 import android.app.Application;
+
+import com.crashlytics.android.Crashlytics;
+
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 /**
- * Default launch activity for template
+ * Default launch application
  */
 public class MainApplication extends Application {
 
@@ -14,6 +18,8 @@ public class MainApplication extends Application {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
+        } else {
+            Fabric.with(this, new Crashlytics());
         }
     }
 }

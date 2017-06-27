@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: '../config/quality.gradle'
+apply plugin: 'io.fabric'
 
 android {
 
@@ -16,6 +17,8 @@ android {
         versionName projectProperties.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [crashlyticsApiKey: project.hasProperty('crashlytics_api_key') ? crashlytics_api_key : System.getenv('crashlytics_api_key') ]
+
     }
 
     buildTypes {
@@ -35,6 +38,8 @@ dependencies {
 
     compile "com.jakewharton.timber:timber:$libVersions.timber"
 
+    compile("com.crashlytics.sdk.android:crashlytics:$libVersions.crashlytics") { transitive = true; }
+
     //Test Dependencies
 
     testCompile "junit:junit:$testVersions.junit"
@@ -42,6 +47,10 @@ dependencies {
     androidTestCompile("com.android.support.test.espresso:espresso-core:$testVersions.espresso", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 afterEvaluate {
