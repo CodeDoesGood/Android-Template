@@ -17,7 +17,7 @@ android {
         versionName projectProperties.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [crashlyticsApiKey: project.hasProperty('crashlytics_api_key') ? crashlytics_api_key : System.getenv('crashlytics_api_key') ]
+        manifestPlaceholders = [crashlyticsApiKey: project.hasProperty('crashlytics_api_key') ? crashlytics_api_key : System.getenv('crashlytics_api_key')]
 
     }
 
@@ -38,11 +38,15 @@ dependencies {
 
     compile "com.jakewharton.timber:timber:$libVersions.timber"
 
-    compile("com.crashlytics.sdk.android:crashlytics:$libVersions.crashlytics") { transitive = true; }
+    compile("com.crashlytics.sdk.android:crashlytics:$libVersions.crashlytics") {
+        transitive = true;
+    }
 
     //Test Dependencies
 
     testCompile "junit:junit:$testVersions.junit"
+
+    testCompile "org.robolectric:robolectric:$testVersions.robolectric"
 
     androidTestCompile("com.android.support.test.espresso:espresso-core:$testVersions.espresso", {
         exclude group: 'com.android.support', module: 'support-annotations'
