@@ -12,6 +12,8 @@ we consider the most important for a readable codebase with consistent formattin
  
 [Java](#java)
 
+[Formatting according to the style in Android Studio](#formatting-according-to-the-style-in-android-studio)
+
 [Documentation](#documentation)
 
 [Logging guidelines](#logging-guidelines)
@@ -47,6 +49,18 @@ Some guidelines are required, some are preferred, and some are optional. Guideli
 
 ## Java
 We are a Java-first dev group. This means: Use Google's coding standards for source code in the Java™ Programming Language. [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
+
+## Formatting according to the style in Android Studio
+
+In order to make it easy to abide to the formatting rules defined by Checkstyle, this project provides two script files that can be used to import the configuration into Android Studio. In order to use them all is needed is to run the scripts:
+
+``` sh
+# In Linux and MacOS
+./config/tools/install-google-style.sh
+
+# in Windows
+config\tools\install-google-style.bat
+```
 
 ## Documentation
 Android projects should be self-documenting but sometimes documentation is required.
